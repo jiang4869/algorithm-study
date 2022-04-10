@@ -1,42 +1,24 @@
 package main
 
-import (
-	"sort"
-	"strconv"
-)
-
 func largestInteger(num int) int {
-	formatInt := strconv.FormatInt(int64(num), 10)
-	oddidx := make([]int, 0)
-	oddval := make([]int, 0)
-	evenidx := make([]int, 0)
-	evenval := make([]int, 0)
-	for idx, val := range formatInt {
-		if (val-'0')%2 == 0 {
-			oddidx = append(oddidx, idx)
-			oddval = append(oddval, int(val-'0'))
-		} else {
-			evenidx = append(evenidx, idx)
-			evenval = append(evenval, int(val-'0'))
+	arr := make([]int, 0)
+	for true {
+		arr = append(arr, num%10)
+		num /= 10
+		if num == 0 {
+			break
 		}
 	}
-	sort.Slice(oddval, func(i, j int) bool {
-		return oddval[i] > oddval[j]
-	})
-	sort.Slice(evenval, func(i, j int) bool {
-		return evenval[i] > evenval[j]
-	})
-	res := make([]int, len(formatInt))
-	for idx, val := range oddidx {
-		res[val] = oddval[idx]
+	for i := 0; i < len(arr); i++ {
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i]%2 == arr[j]%2 && arr[i] > arr[j] {
+				arr[i], arr[j] = arr[j], arr[i]
+			}
+		}
 	}
-	for idx, val := range evenidx {
-		res[val] = evenval[idx]
-	}
-
 	num = 0
-	for _, val := range res {
-		num = num*10 + val
+	for i := len(arr) - 1; i >= 0; i-- {
+		num = num*10 + arr[i]
 	}
 
 	return num
