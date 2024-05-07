@@ -1,5 +1,7 @@
 package main
 
+import "sort"
+
 // LowerBound  nums index for [begin,end)
 func LowerBound(nums []int, begin, end, key int) int {
 	l, r := begin, end
@@ -12,4 +14,18 @@ func LowerBound(nums []int, begin, end, key int) int {
 		}
 	}
 	return l
+}
+
+func LowerBoundBySort(nums []int, key int) int {
+	search := sort.Search(len(nums), func(i int) bool {
+		return nums[i] >= key
+	})
+	return search
+}
+
+func UpperBoundBySort(nums []int, key int) int {
+	search := sort.Search(len(nums), func(i int) bool {
+		return nums[i] > key
+	})
+	return search
 }
