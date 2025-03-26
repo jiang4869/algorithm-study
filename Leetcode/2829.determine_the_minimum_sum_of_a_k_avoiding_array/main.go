@@ -1,15 +1,15 @@
 package main
 
 func minimumSum(n int, k int) int {
-	sum := 0
-	i := 1
-	for ; i <= n && i <= k/2; i++ {
-		sum += i
+	ans := 0
+	a := k / 2
+	if a >= n {
+		ans = (1 + a) * a / 2
+	} else {
+		ans = (1 + a) * a / 2
+		ans += (k + (n - a) - 1) * (n - 1) / 2
 	}
-	tmp := k
-	for ; i <= n; i++ {
-		sum += tmp
-		tmp++
-	}
-	return sum
+
+	return ans
+
 }
